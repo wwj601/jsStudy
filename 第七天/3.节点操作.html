@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul id="box">
+    <!-- 学习大纲 -->
+    <li>GIT和NPM操作</li>
+    <li>面向对象和原型：研究插件源码，自己写插件</li>
+    <li>闭包作用域：堆栈内存处理</li>
+    <li id="fangqi">ES6从入门到放弃</li>
+    <li>同步异步编程及核心：微任务、宏任务、事件循环</li>
+    <li>DOM及事件模型</li>
+    <li>JQuery及源码分析</li>
+    <li>设计模式：发布订阅、单例、Promise、PromiseA+</li>
+    如果你感觉上面挺难的，那么你猜错了，还有更难的
+    <li>AJAX及跨域解决方案：封装一款牛X的AJAX库</li>
+    <li>一入HTTP深似海</li>
+    <li>性能安全优化</li>
+    <!-- 上面的都是毛毛雨 -->
+    <li>VUE全家桶：
+      vue-cli\vue\vue-router\vuex\vue element...
+    </li>
+    <li>vue和vuex的核心源码</li>
+    <li>REACT全家桶：
+      create-react-app、antd、antdpro、react、react-dom、
+      react-native、react-router-dom、redux、react-redux、dva、
+      redux-saga、mobx...
+    </li>
+    <li>REACT的核心原理</li>
+    <li>REDUX源码和中间件编写</li>
+    <!-- 光这些还不够，还要家电逼格的内容 -->
+    <li>webpack</li>
+    <li>node和express</li>
+    <li>type script</li>
+    <li>...</li>
+    我的天啊，怎么学呀~ 好好学呗！
+  </ul>
+  <script>
+    let box = document.getElementById('box');
+
+    // 标准浏览器（非IE6-8）中会把空格和换行当作文本节点处理
+    // （childNodes）包含所有的节点
+    console.log(box.childNodes)
+
+    // 只想要元素节点（但是IE6-8下使用children会把注释
+    // 也当作元素节点）
+    console.log(box.children)
+
+    /* 
+      children:获取指定上下文中，所有的元素的子节点
+      @params
+        context [element object] 指定的上下文元素对象
+      @return
+        [array] 返回所有的元素子节点集合
+      by Mr_wan on 2022/4/23
+    */
+    function children(context) {
+      var ary = [],
+          nodeList = context.childNodes;
+      for (let i = 0; i < nodeList.length; i++) {
+        var item = nodeList[i];
+        item.nodeType === 1 ? ary.push(item) :null;
+      }
+      return ary
+    }
+    console.log(children(box))
+
+    var fangqi = document.getElementById('fangqi')
+    console.log(fangqi.previousElementSibling)
+    console.log(fangqi.nextElementSibling)
+
+    // 获取上一个哥哥元素节点
+    function prev(context){
+      var pre = context.previousSibling;
+      while(pre.nodeType!==1){
+        pre = pre.previousSibling;
+      }
+      return pre;
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" id="codeInp" />
+  <br>
+  <span id="codeBox"></span>
+  <button id="changeCode">看不清，换一张</button>
+
+  <!-- IMPORT JS -->
+  <script>
+    let codeInp = document.getElementById('codeInp'),
+        codeBox = document.getElementById('codeBox'),
+        changeCode = document.getElementById('changeCode');
+    /*
+    *queryCode:获取到四位随机验证码，然后放到指定的盒子中
+    * @params
+    * @return
+    */
+    function queryCode(){
+      let code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+      let result ='';
+      for(var i =0;i<4;i++){
+        let ran = Math.round(Math.random()*(code.length-1));
+        result +=code.charAt(ran);
+      }
+      codeBox.innerHTML = result
+    }
+    queryCode();
+    changeCode.onclick = queryCode;
+    // 文本框失去焦点的时候：验证用户输入的内容和验证码是否相同，
+    // 给予相关的提示，如果不一样需要重新生成验证码
+    codeInp.onblur = function(){
+      let val = this.value,
+        code = codeBox.innerText;
+      if(val.toLowerCase() === code.toLowerCase()){
+        alert('温馨提示：验证码验证成功！')
+      }else{
+        alert('温馨提示：验证码验证失败，请重新输入');
+        this.value = "";
+        queryCode();
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鼠标滑过显示详情</title>
+  <style>
+    *{margin: 0;padding: 0;}
+    .box{
+      /* css3 新盒子模型:控制width/height是盒子最终的宽高 */
+      box-sizing: border-box;
+      width: 200px;
+      margin: 20px auto;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      border: 1px solid lightcoral;
+      position: relative;
+      
+    }
+    .box span{
+      display: block;
+      cursor: pointer;
+    }
+    .detail{
+      box-sizing: border-box;
+      width: 500px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      border:  1px solid lightcoral;
+      position: absolute;
+      right: -1px;
+      top: 38px;
+      z-index: -1;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- 基于css实现,我们需要让详情区域是按钮的子元素 -->
+  <div class="box" id="box">
+    <span>购物车</span>
+    <div class="detail" id="detail">
+      购物车的相关信息
+    </div>
+  </div>
+  <!-- 
+    传统基于操作DOM的方式实现业务需求
+    1.想操作谁就先获取谁
+    2.给某元素绑定某事件
+    3.在事件触发的时候修改元素的样式等
+   -->
+   <script>
+    //  document.getElementById([ID]):在整个文档中,通过元素的ID
+    // 获取到当前这个元素对象
+     let oBox = document.getElementById('box'),
+        detail = document.getElementById('detail');
+      
+    // 元素对象.onclick = function(){}:事情绑定
+    // (click/mouseover/mousedown/mouseup/keydown/keyup)
+     oBox.onclick = function(){
+       
+       if(detail.style.display === "block"){
+        detail.style.display = "none"
+        this.style.borderBottomColor = "lightcoral"
+        return
+       }
+       detail.style.display = "block"
+       this.style.borderBottomColor = "#fff"
+     }
+
+    //  元素对象.style.xxx = xxx:修改元素的某一个样式值(操作的是
+    // 元素行内样式)
+    // .style.xxx 获取行内样式 行内没有设置获取为空
+   </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #clockBox {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0 15px;
+      font-size: 20px;
+      line-height: 70px;
+      color: darkred;
+      background: lightblue;
+      background: -webkit-linear-gradient(top left, lightblue, lightcoral, lightcyan);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="clockBox">
+    
+  </div>
+
+  <!-- IMPORT JS -->
+  <script>
+    let clockBox = document.getElementById('clockBox');
+
+
+    function addZero(num){
+      num = num.toString();
+      return num.padStart(2,'0')
+    }
+    /*
+     *queryDate: 获取当前日期，转换成想要的日期格式
+     *   @params
+     *   @return
+     *by Mr_wan on 2022/04/23
+     */
+    function queryDate() {
+      let time = new Date(),
+        year = time.getFullYear(),
+        month = time.getMonth() + 1,
+        date = time.getDate(),
+        day = time.getDay(),
+        hour = time.getHours(),
+        minute = time.getMinutes(),
+        second = time.getSeconds();
+      let weekAry = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+
+      let result = year + '年' + addZero(month) + '月' + addZero(date) + '日'
+      result += " " + weekAry[day] + " ";
+      result += addZero(hour) + ':' + addZero(minute) + ":" + addZero(second);
+      clockBox.innerHTML = result;
+    }
+    setInterval(queryDate, 1000);
+    
+  </script>
+</body>
+
+</html>

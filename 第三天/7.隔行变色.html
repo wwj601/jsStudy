@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隔行变色</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul,
+    li {
+      list-style: none;
+    }
+
+    #newsBox {
+      box-sizing: border-box;
+      padding: 20px;
+      margin: 20px auto;
+      width: 300px;
+      border: 2px solid lightblue;
+    }
+
+    #newsBox li {
+      line-height: 45px;
+      border-bottom: 1px dashed lightcoral;
+    }
+
+    #newsBox li:last-child {
+      border-bottom: none;
+    }
+
+    /* 基于css实现 */
+    /* #newsBox li:nth-child(even){
+      background: lightgray;
+    }
+    #newsBox li:hover{
+      background: lightgreen;
+    } */
+  </style>
+</head>
+
+<body>
+  <ul id="newsBox">
+    <li>我是第1个li</li>
+    <li>我是第2个li</li>
+    <li>我是第3个li</li>
+    <li>我是第4个li</li>
+    <li>我是第5个li</li>
+  </ul>
+  <script>
+    let newsBox = document.getElementById('newsBox'),
+      newsList = newsBox.getElementsByTagName('li');
+    // 在指定的newsBox范围之内，通过标签名获取一组元素（元素
+    // 集合HTMLCollection）=>集合和数组很相似，也是以数字索引
+    // 作为属性名，有length属性存储长度但是不是数组，是类数组
+    for (var i = 0; i < newsList.length; i++) {
+      let curLi = newsList[i]
+      // if(i % 2 === 0){//索引是偶数 奇数行
+      //   curLi.style.background = "#fff"
+      // }else{
+      //   curLi.style.background = "#ddd"
+      // }
+      var bg = i % 2 === 0 ? "#890" : "#575";
+      curLi.style.background = bg
+      /* 
+      * 自定义属性编程思想:
+        前期把一些存储到元素的自定义属性上,后期需要用到的时候,直接
+        从属性上获取到这些值即可
+       */
+       curLi['myOriginBg'] = bg;
+
+      curLi.onmouseover = function(){
+        this.style.background = "lightblue" ;
+      }
+      curLi.onmouseout = function(){
+        this.style.background = this['myOriginBg'];
+      }
+    }
+  </script>
+</body>
+
+</html>

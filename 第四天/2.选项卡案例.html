@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隔行变色+选项卡</title>
+  <link rel="stylesheet" href="css/tab.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul,
+    li {
+      list-style: none;
+    }
+
+    #newsBox {
+      box-sizing: border-box;
+      padding: 20px;
+      margin: 20px auto;
+      width: 300px;
+      border: 2px solid lightblue;
+    }
+
+    #newsBox li {
+      line-height: 45px;
+      border-bottom: 1px dashed lightcoral;
+    }
+
+    #newsBox li:last-child {
+      border-bottom: none;
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <ul id="newsBox">
+    <li>我是第1个li</li>
+    <li>我是第2个li</li>
+    <li>我是第3个li</li>
+    <li>我是第4个li</li>
+    <li>我是第5个li</li>
+  </ul>
+  <div class="tab" id="tabBox">
+    <ul id="navBox">
+      <li class="active">编程</li>
+      <li>读书</li>
+      <li>运动</li>
+    </ul>
+    <div class="active">编程使我快乐</div>
+    <div>读书使我幸福</div>
+    <div>运动使我健康</div>
+  </div>
+  <script>
+    let newsBox = document.getElementById('newsBox'),
+      newsList = newsBox.getElementsByTagName('li');
+    for (var i = 0; i < newsList.length; i++) {
+      let curLi = newsList[i]
+      curLi.style.background = i % 2 === 0 ? "#890" : "#575";
+      curLi.onmouseover = function(){
+        var curColor = this.style.background
+        this['curColor'] = curColor
+        this.style.background = "lightblue"
+      }
+      curLi.onmouseout = function(){
+        this.style.background = this['curColor']
+      }
+    }
+  </script>
+  <script type="text/javascript">
+    var tabBox = document.getElementById('tabBox'),
+        tabList = tabBox.getElementsByTagName('div'),
+        navBox = document.getElementById('navBox'),
+        navList = navBox.getElementsByTagName('li');
+    for(var i=0;i<navList.length;i++){
+      console.log(i)
+      // 在循环给每个LI绑定点击事件的时候，我们给每个LI设置一个
+      // 自定义属性myindex，属性值存储的是当前LI的索引
+      // navList[i].myIndex = i;
+      var curLi = navList[i];
+        curLi.onclick = (function(i){
+          return function(){
+            changetab(i)
+          }
+        })(i)
+    }
+    // 封装一个函数实现选项卡切换
+    // index：形参，执行的时候把点击的哪一项索引传递过来即可
+    function changetab(index){
+      for(var i=0;i<navList.length;i++){
+        navList[i].className = ""
+        tabList[i].className = ""
+      }
+      navList[index].className = "active"
+      tabList[index].className = "active"
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>扩展思考题</title>
+  <style>
+    #box{
+      box-sizing: border-box;
+      width: 200px;
+      height: 200px;
+      border: 3px solid lightblue;
+    }
+    .AA{
+      background: lightcoral;
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+  <script>
+    var box = document.getElementById('box');
+    // 通过方法获取的元素是对象数据类型的值
+    // console.log(typeof box);// "object"
+    // 基于dir可以查看一个对象的详细信息
+    /* 
+    *id：操作元素的ID值
+    *className:操作元素的Class样式类的值
+    *innerHTML：操作元素的内容（可以识别标签）
+    *innerText：和innerHTML的区别是不能识别标签
+    tagName：获取元素的标签名（一般是大写）
+    ...
+    *style：操作元素的行内样式 属性值是一个新的对象CSSStyleDeclaration
+    
+    */
+    console.dir(box)
+    box.className="AA"
+  </script>
+</body>
+</html>
