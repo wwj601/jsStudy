@@ -1,0 +1,38 @@
+{
+  // console.log(a);//ReferenceError: a is not defined
+}
+
+{
+/* console.log(a);//ReferenceError: Cannot access 'a' before initialization
+let a; */
+}
+
+{
+// 这是浏览器的BUG，本该是报错的，因为没有a。但是没报错 （暂时性死区）
+console.log(typeof a);//"undefined" 
+
+}
+
+{
+
+/* console.log(typeof a);//ReferenceError: Cannot access 'a' before initialization
+let a;  */
+}
+
+{
+  // 闭包作用域案例
+  var i=20;
+  function fn(){
+    i-=2;
+    return function (n){
+      console.log((++i) - n);// 18 18 16 14 14
+    }
+  }
+  var f = fn();
+  f(1)
+  f(2)
+  fn()(3)
+  fn()(4)
+  f(5)
+  console.log(i);//19
+}
