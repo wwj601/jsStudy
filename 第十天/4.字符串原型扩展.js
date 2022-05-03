@@ -3,8 +3,6 @@ time = time.toLocaleString(); //'2022/5/3 11:35:11'
 
 // 想要转变的格式: "05月03日 11时35分"
 
-
-
 ~ function () {
   /**
    * formatTime:时间字符串的格式化处理
@@ -29,13 +27,13 @@ time = time.toLocaleString(); //'2022/5/3 11:35:11'
    *  @return
    *     [string] 返回要获取的参数
    * by Mr_wan on 2020/5/5
-  */
+   */
   function queryURLParams(name) {
     let result = {},
       reg1 = /([^?#=&]+)=([^?#=&]+)/g,
       reg2 = /#([^?#=&]+)/g;
-    this.replace(reg1, (...[,$1,$2]) => result[$1] = $2);
-    this.replace(reg2, (...[,$1]) => result['HASH'] = $1);
+    this.replace(reg1, (...[, $1, $2]) => result[$1] = $2);
+    this.replace(reg2, (...[, $1]) => result['HASH'] = $1);
     param = name in result ? result[name] : null;
     result = null;
     return param;
@@ -45,19 +43,20 @@ time = time.toLocaleString(); //'2022/5/3 11:35:11'
    *  @params
    *  @return
    *    [string] 千分符后的字符串
+   *  by Mr_wan on 2020/5/5
    */
-  function milliMeter(){
+  function milliMeter() {
     let reg = /\d{1,3}(?=(\d{3})+$)/g;
-    return this.replace(reg,content => content+',')
+    return this.replace(reg, content => content + ',')
   }
   // 扩展到内置类String的原型上
-  ['formatTime','queryURLParams','milliMeter'].forEach(item => {
+  ['formatTime', 'queryURLParams', 'milliMeter'].forEach(item => {
     String.prototype[item] = eval(item);
   })
 }();
 console.log(time.formatTime("{1}/{2} {3}:{4}:{5}"));
-let url ="http://www.baidu.com?name=wwj&age=28#time"
-console.log(url.queryURLParams("name"));//wwj
+let url = "http://www.baidu.com?name=wwj&age=28#time"
+console.log(url.queryURLParams("name")); //wwj
 let num = '15628954'; //=>"15,628,954" 千分符
 // num = '112345678256874'
 
@@ -67,7 +66,6 @@ for(var i=3;i<num.length;i+=4){
   let prev = num.substring(0,i),
       next = num.slice(i);
   num = prev+','+next
-  
 }
 num = num.split('').reverse().join(''); */
 console.log(num.milliMeter())

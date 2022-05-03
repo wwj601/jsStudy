@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS盒子模型属性</title>
+  <style>
+    /* 
+      .box{position: absolute;
+      top:50%;
+      left:50%
+      transform:translate(-50%,-50%)}
+    */
+    /* 
+      flex
+      body{
+        display: flex;
+        justify-content: center;
+        align-items:center
+      }
+    */
+    *{margin: 0;padding: 0;}
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    .box{width: 300px;height: 300px;
+      box-sizing: border-box;
+      /* position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto; */
+      padding: 15px;
+    border: 10px lightblue;
+    line-height: 30px;
+    font-size: 18px;
+  background: lightcyan;
+}
+  .outer{
+    box-sizing: border-box;
+    width: 500px;
+    height: 500px;
+    background: lightcoral;
+    border: 10px solid orangered;
+    position: relative;
+  }
+  </style>
+</head>
+<body>
+  <div class="outer" id="outer">
+
+    <div id="box" class="box">
+      诫子书-诸葛亮
+      夫君子之行，静以修身，俭以养德。非淡泊无以明志，非宁静无以致远。
+      夫学须静也，才须学也，非学无以广才，非志无以成学。
+      淫慢则不能励精，险躁则不能治性。年与时驰，意与日去，遂成枯落，
+      多不接世，悲守穷庐，将复何及！
+    </div>
+  </div>
+  <script>
+    // js实现居中
+    // let box = document.getElementById('box');
+    // let winW = document.documentElement.clientWidth || document.body.clientWidth;
+    // let winH = document.documentElement.clientHeight || document.body.clientHeight;
+    // box.style.position = 'absolute';
+    // box.style.left = (winW - box.clientWidth)/2 +'px';
+    // box.style.top = (winH - box.clientHeight)/2 +'px';
+
+    /**
+     * offset:获取当前元素距离body的左/上偏移
+     *  @params
+     *    [object] 要获取的偏移元素对象
+     *  @return
+     *    [object] 获取当前元素的左/上偏移对象
+     *    
+     */
+    function offset(curEle){
+      let par = curEle.offsetParent,
+          l = curEle.offsetLeft,
+          t = curEle.offsetTop;
+      while(par && par.tagName !== "BODY"){
+        if(!/MISE 8\.0/.test(navigator.userAgent)){
+          l+=par.clientLeft;
+          t+=par.clientTop;
+        }
+        l+=par.offsetLeft;
+        t+=par.offsetTop;
+        par = par.offsetParent;
+      }
+      return {left:l,t:top}
+    }
+  </script>
+</body>
+</html>
