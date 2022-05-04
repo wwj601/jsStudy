@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{margin: 0;padding: 0;}
+    .imgbox{width: 420px;height: 250px;margin: 800px auto;background-color: beige;}
+    .imgbox img{display: none;border: none;width: 100%;height: 100%;}
+  </style>
+</head>
+<body>
+  <div class="imgbox">
+    <img src="" true-img = "./img/图片延迟加载.png"/>
+  </div>
+  <script>
+    function lazyImg(curImg){
+      let trueImg = curImg.getAttribute('true-img');
+      curImg.src = trueImg;
+      // 校验真正的图片能够正常加载才显示出来
+      curImg.onload = function(){
+
+        curImg.style.display = 'block';
+      }
+      curImg.isLoad = true;
+    }
+    let imgbox = document.querySelector('.imgbox'),
+        _img = imgbox.querySelector('img');
+    window.onscroll = function(){
+      if(_img.isLoad) return;//加载一次就不再加载了
+      let html = document.documentElement,
+          A = html.scrollTop + html.clientHeight,//html滚动条卷去的高度+一整屏的高度
+          B = imgbox.offsetHeight + imgbox.offsetTop;//图片框的自身高度+图片距离body的上偏移
+          if(B<=A){//要显示的图片完全出现在视野中
+            lazyImg(_img)
+          }
+    }
+  </script>
+</body>
+</html>
