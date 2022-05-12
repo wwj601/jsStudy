@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>定时器动画</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    .img {
+      width: 200px;
+      height: 300px;
+      border: 1px solid red;
+      position: absolute;
+      left: 0;
+      top: 0;
+      /* transition: 1s;*/
+    }
+  </style>
+</head>
+
+<body>
+  <img src="./img/1.jpeg" class="img" />
+  <script>
+    function debounce(fn, wait, immdiate) {
+      let timer = null,
+        result = null;
+      return function (...args) {
+        let context = this,
+          callNow = immdiate && !timer;
+        clearInterval(timer);
+        timer = setTimeout(() => {
+          timer = null;
+          result = !immdiate && fn.call(context, ...args);
+        }, wait);
+
+        callNow ? result = fn.call(context, ...args) : null;
+        return result;
+      }
+    }
+    var nba = document.querySelector('.img'),
+      targetL = document.documentElement.clientWidth - nba.offsetWidth,
+      targetT = document.documentElement.clientHeight - nba.offsetHeight,
+      duration = 1000,
+      time = 0;
+    /**
+     * animate:封装简易的动画
+     *  @params
+     */
+    function animate(curEle, target = {}, duration = 1000, callback) {
+      let time = 0,
+        begin = {},
+        change = {};
+      for (let key in target) {
+        begin[key] = parseFloat(getComputedStyle(curEle)[key]);
+        change[key] = target[key] - begin[key];
+      }
+      let timer = setInterval(() => {
+        time += 16.7
+        // 设置边界
+        if (time >= duration) {
+          clearInterval(timer);
+          timer = null;
+          for (let key in target) {
+            curEle['style'][key] = target[key] + 'px';
+            callback && callback();
+            return;
+          }
+        }
+        // 获取当前样式值
+        for (let key in target) {
+          let cur = time / duration * change[key] + begin[key];
+          curEle['style'][key] = cur + 'px';
+        }
+      }, 16.7);
+
+    }
+    animate(nba, {
+      left: targetL,
+      top: targetT
+    }, 2000, () => {
+      nba.style.transform = 'rotate(180deg)'
+    })
+  </script>
+  <script>
+    // nba = document.querySelector('.img'),
+    //     target = document.documentElement.clientWidth-nba.offsetWidth;
+
+    // nba.style.transform = `translateX(${target}px)`
+  </script>
+  <script>
+    /* 定时器动画：限定步长 */
+    /* var nba = document.querySelector('.img'),
+        target = document.documentElement.clientWidth-nba.offsetWidth,
+        step = 10;
+        let timer = setInterval(()=>{
+          let curL = parseFloat(window.getComputedStyle(nba,null).left) 
+          if((curL+step)>=target){
+            // 边界判断（当前位置加上基础步长，防止超过边界有一个回退的效果）
+            nba.style.left = target +'px';
+            clearInterval(timer);
+            timer = null;
+            return;
+          }
+          nba.style.left = curL + step +'px';
+        },17) */
+  </script>
+  <script>
+    /**
+     *  定时器动画：限定时间的匀速运动
+     *    T:time  当前已经运动时间
+     *    B:begin 开始位置
+     *    D:duration 总时间
+     *    C:change 总距离
+     * 当前位置 = T/D*C+B
+     * */
+    /* var nba = document.querySelector('.img'),
+        // target：目标位置
+        target = document.documentElement.clientWidth-nba.offsetWidth,
+        // begin:起始位置
+        begin = parseFloat(window.getComputedStyle(nba).left),
+        // duration:总时间
+        duration = 1000,
+        // change:总距离
+        change = target - begin,
+        // time：已经运动的时间
+        time = 0;
+
+    let timer = setInterval(() => {
+      time+=17;
+      if(time>=duration){
+        nba.style.left = target +'px';
+        clearInterval(timer)
+        timer = null;
+        return;
+      }
+      let curL = time/duration*change+begin;
+      nba.style.left = curL +'px'
+      
+    }, 17); */
+  </script>
+  <script>
+    /* window.requestAnimationFrame:JS中比定时动画方式更好的方式（HTML5提供的） */
+    /* var nba = document.querySelector('.img'),
+        // target：目标位置
+        target = document.documentElement.clientWidth-nba.offsetWidth,
+        // begin:起始位置
+        begin = parseFloat(window.getComputedStyle(nba).left),
+        // duration:总时间
+        duration = 1000,
+        // change:总距离
+        change = target - begin,
+        // time：已经运动的时间
+        time = 0;
+    function render(){
+      time+=16.7;
+      if(time>=duration){
+        nba.style.left = target +'px';
+        return;
+      }
+      let curL = time/duration*change+begin;
+      nba.style.left = curL +'px';
+      window.requestAnimationFrame(render);
+    }
+    window.requestAnimationFrame(render); */
+  </script>
+</body>
+
+</html>

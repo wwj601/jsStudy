@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="www.baidu.com">跳转页面</a>
+  <a href="javascript:;" >普通按钮</a>
+  <a href="http://www.baidu.com" id="jump">普通按钮</a>
+  
+  <br/>
+  <input type="text" id="cardInp">
+  <script>
+    /**
+     *  A标签的默认行为1：页面跳转
+     *  A标签的默认行为2：锚点定位
+     * 
+     * 阻止默认行为
+     *    1. href="javascript:;"
+     *    2. ev.preventDefault();
+     *  */
+    function fn(ev){
+      console.log(ev)
+      ev.preventDefault();
+    }
+    jump.onclick = fn
+
+    window.addEventListener('contextmenu',function(ev){
+      alert('哈哈哈，你被耍了')
+      ev.preventDefault();
+      window.event.returnValue = false;
+    }) 
+    // document.oncontextmenu = function(){ 
+    //   alert('请不要点击鼠标右键！');
+    //   return false;
+    // }
+    cardInp.onkeydown = cardInp.onkeyup =  function(ev){
+      // =>键盘事件对象
+      console.log(ev);
+      let val = this.value,
+          reg = /[^0-9X]/g;
+      this.value = val.replace(reg,'');
+      if(this.value.length>=18){
+        let ary = [8,13,37,38,39,40,46];
+        if(!ary.includes(ev.keyCode)){
+          ev.preventDefault();
+          ev.returnValue = false;
+        }
+      }
+      if(ev.keyCode === 13){
+        alert(this.value)
+      }
+    } 
+  </script>
+</body>
+</html>

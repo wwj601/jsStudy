@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数的防抖和节流</title>
+  <style>
+    *{margin: 0;padding: 0;}
+    html,body{width:100%;height: 500%;
+    background: -webkit-linear-gradient(top left,lightblue,lightyellow,orange);
+    }
+  </style>
+</head>
+<body>
+  <script>
+    /**
+     * 函数的防抖（debounce）：不是某个事件触发的时候就执行函数，而是在指定的时间间隔内
+     * 执行一次，减少函数的执行次数
+     * 
+     * 函数的节流（throttle）:为了缩减执行的频率，但不像防抖一样，指定的时间间隔内只能执行一次,
+     * 而是达到了时间间隔就可以执行一次
+     */
+
+    
+    /**
+     * debounce:防抖，在指定的时间间隔内执行一次
+     *  @params
+     *    fnc:要执行的函数
+     *    wait：时间间隔
+     *    immediate：是否开始就触发函数执行
+     *  @return
+     *    可被调用的函数
+    */
+    function debounce(fnc,wait,immediate){
+        var timer = null,
+            result =null;
+        return function(...args){
+          var context = this,
+              callNow = immediate && !timer;
+          clearTimeout(timer);//重要：在设置新的定时器之前，都要把之前设置的定时器清除掉
+          // 因为在防抖的时间间隔内，只能执行一次；
+          timer = setTimeout(()=>{
+            timer = null;
+            if(!immediate) result = fnc.apply(context,args);
+          },wait)
+          if(callNow) result =fnc.apply(context,args);
+          return result;
+        }
+    }
+
+    /**
+     * debounce:节流，为了缩减执行的频率，达到了一定的时间间隔就会执行一次
+     *  @params
+     *    fnc:要执行的函数
+     *    wait：时间间隔
+     *  @return
+     *    可被调用的函数
+    */
+    function throttle(fnc,wait){
+      let result =null,
+          timer = null,
+          previous = 0;
+      return function(...args){
+        let now = new Date(),
+            context = this;
+        let remaining = wait - (now -previous);
+        // remianing小于等于0，表示上次执行至此次已经经过了一个时间间隔
+        if(remaining<=0){
+          clearTimeout(timer);
+          previous = now;
+          timer = null;
+          result = fnc.apply(context,args);
+        }else if(!timer) {
+          timer = setTimeout(() => {
+            previous = new Date();
+            timer = null;
+            result = fnc.apply(context,args);
+          }, remaining);
+        }
+        return result;
+      }
+    }
+
+    let n = 0;
+    function fn(){
+      console.log(++n);
+    }
+    let lazyScroll = debounce(fn,200,true)
+    let lazy = throttle(fn,50)
+    window.onscroll = lazy;
+  </script>
+</body>
+</html>

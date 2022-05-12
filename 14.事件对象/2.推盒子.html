@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>推盒子案例</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .container {
+      box-sizing: border-box;
+      width: 400px;
+      height: 400px;
+      background: lightblue;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -200px 0 0 -200px;
+    }
+
+    .box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      background: lightcoral;
+      /* CSS3动画 */
+      transition: all .3s linear;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box"></div>
+  </div>
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script>
+    var $container = $('.container'),
+      $box = $container.children('.box');
+    $(document).on('keydown keypress', function (ev) {
+      let code = ev.keyCode,
+        curL = parseFloat($box.css('left')),
+        curT = parseFloat($box.css('top')),
+        step = 30;
+      switch (code) {
+        case 37:
+          curL -= step;
+          break;
+        case 38:
+          curT -= step;
+          break;
+        case 39:
+          curL += step;
+          break;
+        case 40:
+          curT += step;
+          break;
+      }
+      // 判断边界值
+      let minL = 0,
+        maxL = $container.outerWidth() - $box.outerWidth(),
+        minT = 0,
+        maxT = $container.outerHeight() - $box.outerHeight();
+      curL = curL <= minL ? minL : (curL >= maxL ? maxL : curL);
+      curT = curT <= minT ? minT : (curT >= maxT ? maxT : curT);
+      $box.css({
+        left: curL,
+        top: curT
+      })
+    })
+  </script>
+</body>
+
+</html>

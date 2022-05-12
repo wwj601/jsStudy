@@ -1,0 +1,126 @@
+*{margin: 0;padding: 0;}
+html,body{width: 100%;height: 100%;}
+/* 
+  CSS3中的变形属性：transform,改变元素的样式
+  优势：开启了硬件加速，以传统的样式改变性能流畅一些
+  特点：基于TRANSFORM变形的元素，相当于脱离了文档流，对其余位置不会产生影响
+  + scale(N) 缩放
+  + translate(X,Y) 位移  translate3d(X,Y,Z)
+  + rotate(N deg) 旋转N度 rotateX/rotateY
+  + skew(N deg) 倾斜N度
+  + matrix 矩阵变形 matrix3d
+*/
+/* .box{width: 150px;height: 200px;margin: 20px;display: block;
+
+transform: scale(0.8) rotate(180deg) skew(-45deg) ;
+transform: translate(200px,200px);
+transform:scale(1.6);
+}
+.b{
+  width: 300px;height: 200px;
+  background: lightblue;
+  margin: 10px;
+} 
+*/
+
+/* 
+  CSS3中的过度动画：transition
+    给元素设置过渡效果，当元素的样式在某种情况下发生改变了，不是立即改变
+    而是按照指定的效果慢慢的去改变，从而实现动画效果
+  + transition-property:设置过度的样式属性（那些样式改变会执行过度效果），
+  默认是all，元素所有的样式改变都会执行过度效果
+  + transition-druation:动画运行的时间 ms/s
+  + transition-timing-function:运行的方式，linear默认匀速运动。ease
+  ease-in ease-out ease-in-out、cubic-bezier
+  + transition-delay:设置延迟时间，默认0s立即执行
+  .box{
+    width: 300px;height: 400px;display: block;
+  
+    transition: all .5s linear 0s;
+    transition: .5s;
+  }
+  .box:hover{
+    transform: scale(1.5);
+    -webkit-filter:grayscale(1);
+  }
+*/
+
+/* 
+  CSS3中的帧动画：animation 
+    1.制作运动的轨迹（每一帧元素的样式）@keyframes
+      @keyframes 动画名{
+        0%或者from{ 第一帧的样式 }
+        ...
+        50%{ 中间帧的样式 }
+        ...
+        100%或者to{ 最后一帧的样式 }
+      }
+    2.播放动画（按照轨迹运动）animation
+      + animation-name:动画名
+      + animation-duration：播放的时间
+      + animation-timing-function：运动方式，默认ease
+      + animation-delay：延迟时间，默认0s
+      + animation-iteration-count：播放次数，默认1 infinite 无限播放
+      + animation-fill-mode：控制运动状态
+        + forwards:animation动画，元素运动完，默认会返回第一帧的位置，
+          如果设置了这个属性，则运动完停留在最后一帧的位置
+        + backwards：在动画设置延迟时间的情况下，我们让元素在第一帧位置等待运行
+        + both：同时具备以上来两个特点
+*/
+@keyframes AAA{
+  0%{
+    transform:  translate(0,0);
+  }
+  25%{
+    transform:  translate(600px,0);
+  }
+  50%{
+    transform:   translate(600px,400px);
+  }
+  75%{
+    transform:   translate(0,400px);
+  }
+}
+.box{
+  /* animation: AAA 5s linear infinite both; */
+}
+@keyframes heartBeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  14% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  42% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.heartBeat {
+  -webkit-animation-name: heartBeat;
+  animation-name: heartBeat;
+  -webkit-animation-duration: calc(1s * 1.3);
+  animation-duration: calc(1s * 1.3);
+  -webkit-animation-duration: calc(var(--animate-duration) * 1.3);
+  animation-duration: calc(var(--animate-duration) * 1.3);
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
