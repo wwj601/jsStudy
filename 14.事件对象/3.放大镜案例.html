@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>放大镜案例</title>
+  </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html,body{width: 100%;height:100%;overflow: hidden;}
+    .magnifier {
+      width: 650px;
+      box-sizing: border-box;
+      display: flex;
+      margin: 20px auto;
+    }
+
+    .abbre {
+      box-sizing: border-box;
+      width: 260px;
+      height: 260px;
+      position: relative;
+    }
+
+    .abbre img {
+      width:100%;
+      height: 100%;
+    }
+
+    .abbre .mark {
+      display: none;
+      box-sizing: border-box;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: rgba(255, 0, 0, .3);
+    }
+
+    .origin {
+      box-sizing: border-box;
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+      display: none;
+    }
+
+    .origin img {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="magnifier">
+    <div class="abbre">
+      <img src="./img/magnifier.jpg" alt="">
+      <div class="mark"></div>
+    </div>
+    <div class="origin">
+      <img src="./img/magnifier.jpg" alt="">
+    </div>
+  </div>
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script>
+    let $abbre = $('.abbre'),
+      $mark = $abbre.find('.mark'),
+      $origin = $('.origin'),
+      $originImg = $origin.find('img');
+    // 获取缩略图大小、偏移量和放大镜的大小
+    let abbreOffset = $abbre.offset(),
+        abbreW = $abbre.outerWidth(),
+        abbreH = $abbre.outerHeight(),
+        markW = $mark.outerWidth(),
+        markH = $mark.outerHeight(),
+        originW = $origin.outerWidth(),
+        originH = $origin.outerHeight();
+    // 动态计算大图的大小
+    let originImgW = abbreW / markW * originW,
+        originImgH = abbreH / markH * originH;
+    $originImg.css({
+      width: originImgW,
+      height: originImgH,
+    })
+
+    // 大图移动的比率
+    let bigLRatio = originImgW / abbreW,
+        bigTRatio = originImgH / abbreH;
+    console.log(bigLRatio,bigTRatio)  
+
+    function computed(ev) {
+      let markL = ev.pageX - abbreOffset.left - markW / 2,
+      markT = ev.pageY - abbreOffset.top - markH / 2;
+      let minL = 0,
+          maxL = abbreW - markW,
+          minT = 0,
+          maxT = abbreH - markH;
+      markL = markL < minL ? minL : (markL > maxL ? maxL : markL);
+      markT = markT < minT ? minT : (markT > maxT ? maxT : markT);
+      // 放大镜移动
+      $mark.css({
+        left:markL,
+        top:markT
+      })
+      // 右侧大图移动
+      $originImg.css({
+        left:-markL * bigLRatio,
+        top:-markT * bigTRatio,
+      })
+    }
+
+    $abbre.mouseenter(function (ev) {
+      $mark.css('display', 'block');
+      $origin.css('display', 'block');
+      computed(ev)
+    }).mouseleave(function () {
+      $mark.css('display', 'none');
+      $origin.css('display', 'none');
+    }).mousemove(function (ev) {
+      computed(ev)
+    })
+  </script>
+</body>
+
+</html>

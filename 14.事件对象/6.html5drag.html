@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html,body{
+      width: 100%;
+      height: 100%;
+    }
+    .box {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100px;
+      height: 100px;
+      background: red;
+      cursor:move;
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" draggable="true"></div>
+  <script>
+    let box = document.querySelector('.box'),
+      winW = document.documentElement.clientWidth,
+      winH = document.documentElement.clientHeight;
+
+    
+    box.ondragstart = function(ev){
+      this.startX = ev.pageX;
+      this.startY = ev.pageY;
+      this.startL = this.offsetLeft;
+      this.startT = this.offsetTop;
+    }
+    box.ondrag = function(ev){
+      let curL = ev.pageX - this.startX + this.startL,
+        curT = ev.pageY - this.startY + this.startT;
+      let minL = 0,
+        maxL = winW - this.offsetWidth,
+        minT = 0,
+        maxT = winH - this.offsetHeight;
+      curL = curL < minL ? minL : (curL > maxL ? maxL : curL);
+      curT = curT < minT ? minT : (curT > maxT ? maxT : curT);
+      this.curL = curL; 
+      this.curT = curT; 
+      this.style.left = curL + 'px';
+      this.style.top = curT + 'px';
+    }
+    box.ondragover = function(ev){
+      ev.preventDefault();
+    }
+    
+  </script>
+</body>
+
+</html>
