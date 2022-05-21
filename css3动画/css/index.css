@@ -2,7 +2,7 @@
 html,body{width: 100%;height: 100%;}
 /* 
   CSS3中的变形属性：transform,改变元素的样式
-  优势：开启了硬件加速，以传统的样式改变性能流畅一些
+  优势：开启了硬件加速，比传统的样式改变性能流畅一些
   特点：基于TRANSFORM变形的元素，相当于脱离了文档流，对其余位置不会产生影响
   + scale(N) 缩放
   + translate(X,Y) 位移  translate3d(X,Y,Z)

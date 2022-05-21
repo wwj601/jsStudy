@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    // new Promise() Promise resolver undefined is not a function
+    console.dir(Promise)
+    /**
+     *  new Promise([executor]):第一个参数必传 执行函数
+     *  [executor]
+     *    1.new Promise的时候就会把executor执行，创建一个promise的一个实例，
+     * excutor是Promise类的一个回调函数，Promise内部会把它执行
+     *    2.Promise不仅把excutor执行，而且还给excutor传递两个参数resolve，reject
+     * （两个参数也是函数类型）
+     *      =>resolve函数：它执行代表Promise处理的异步事情是成功的，把Promise的状态改为fulfilled（成功态）
+     *      =>reject函数：它执行代表Promise
+     */
+    let promiseExamp = new Promise((resolve,reject)=>{
+      let ran = Math.random()
+      setTimeout(() => {
+        if(ran>0.5){
+          resolve(ran)
+        }else{
+          reject(ran)
+        }
+      }, 1000);
+    });
+    promiseExamp.then(result=>{
+      console.log('成功:'+result)
+    },error=>{
+      console.log('失败:'+error)
+    })
+  </script>
+  <script>
+    // then(onresolve,onReject)
+    let pro = new Promise((resolve,reject)=>{
+      let ran = Math.random()
+      setTimeout(() => {
+        ran>0.5 ? resolve(ran) :reject(ran);
+      }, 1000);
+    });
+    console.log(pro)
+
+  </script>
+  <script>
+    new Promise((resolve,reject)=>{
+      resolve()
+    }).then().catch(x=>{
+      console.log(1)
+    }).then(x=>{
+      console.log(2);//2
+    }).then(x=>{
+      console.log(3);//3
+    }).catch(x=>{
+      console.log(4)
+    }).catch().then(x=>{
+      console.log('AAA');//'AAA'
+      console.log(AAA);//这里报错了，会走下次的reject
+    }).catch().then(null,x=>{
+      console.log(5);//5
+    })
+  </script>
+  <script>
+    
+  </script>
+</body>
+</html>
