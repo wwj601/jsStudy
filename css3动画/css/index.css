@@ -81,9 +81,9 @@ transform:scale(1.6);
     transform:   translate(0,400px);
   }
 }
-.box{
-  /* animation: AAA 5s linear infinite both; */
-}
+/* .box{
+   animation: AAA 5s linear infinite both; 
+} */
 @keyframes heartBeat {
   0% {
     -webkit-transform: scale(1);
