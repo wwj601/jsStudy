@@ -12,11 +12,11 @@ app.get('/list',(req,res)=>{
     result = JSON.parse(result);
     result = lx==='dev' ? result['devDependencies'] :result['dependencies'];
     res.status(200);
-    res.type('application/javascript');
+    res.type('application/json');
     res.send(result);
   }).catch(err=>{
     res.status(500);
-    res.type('application/javascript');
+    res.type('application/json');
     res.send(err);
   })
 })
